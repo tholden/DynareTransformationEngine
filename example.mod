@@ -1,5 +1,5 @@
 @#include "Initialize.mod"
-@#define EndoVariables = EndoVariables + [ "R", "1", "Inf" ]
+@#define EndoVariables = EndoVariables + [ "R", "0", "Inf" ]
 @#define EndoVariables = EndoVariables + [ "PI", "0", "theta^(1/(1-varepsilon))" ]
 @#define EndoVariables = EndoVariables + [ "L", "0", "((1+vartheta)/psi)^(1/(1+vartheta))" ]
 @#define EndoVariables = EndoVariables + [ "NU", "0", "Inf" ]
@@ -50,7 +50,7 @@ model;
 	1 = R * beta_LEAD * ( C / C_LEAD ) / PI_LEAD;
 	AUX1 = MC * (Y/C) + theta * beta_LEAD * PI_LEAD^(varepsilon) * AUX1_LEAD;
 	AUX2 = PI_STAR * ((Y/C) + theta * beta_LEAD * ((PI_LEAD^(varepsilon-1))/PI_STAR_LEAD) * AUX2_LEAD);
-	log( R - 1 ) = log( max(1,( PI_STEADY / beta_STEADY )^(1 - rho_r) * R_LAG^rho_r * ( ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) )^(1 - rho_r) * M) - 1 );
+	log( R ) = log( max( 1, ( PI_STEADY / beta_STEADY )^(1 - rho_r) * R_LAG^rho_r * ( ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) )^(1 - rho_r) * M) );
 	log( NU ) = log( theta * (PI^varepsilon) * NU_LAG + (1 - theta) * PI_STAR^(-varepsilon) );
 end;
 
