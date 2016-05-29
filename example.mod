@@ -1,5 +1,4 @@
 @#include "Initialize.mod"
-@#define EndoVariables = EndoVariables + [ "R", "0", "Inf" ]
 @#define EndoVariables = EndoVariables + [ "PI", "0", "theta^(1/(1-varepsilon))" ]
 @#define EndoVariables = EndoVariables + [ "L", "0", "((1+vartheta)/psi)^(1/(1+vartheta))" ]
 @#define EndoVariables = EndoVariables + [ "NU", "0", "Inf" ]
@@ -11,7 +10,7 @@
 @#include "CreateShocks.mod"
 @#include "ClassifyDeclare.mod"
 
-parameters beta_STEADY, psi, A_STEADY, Sg_STEADY, PI_STEADY, vartheta, sigma, varepsilon, theta, phi_pi, phi_y, rho_a, rho_r, rho_b, rho_g, sigma_g, sigma_b, sigma_a, sigma_m;
+parameters beta_STEADY, psi, A_STEADY, Sg_STEADY, PI_STEADY, vartheta, sigma, varepsilon, theta, phi_pi, phi_y, rho_a, rho_b, rho_g, sigma_g, sigma_b, sigma_a, sigma_m;
 
 beta_STEADY = 0.994;
 Sg_STEADY = 0.2;
@@ -24,7 +23,6 @@ varepsilon = 6;
 sigma = 1;
 phi_pi = 1.5;
 phi_y = 0.25;
-rho_r = 0;
 rho_a = 0.9;
 rho_g = 0.8;
 rho_b = 0.8;
@@ -47,10 +45,10 @@ model;
 	#MC = W/A;
 	#AUX2 = varepsilon / (varepsilon - 1) * AUX1;
 	#AUX2_LEAD = varepsilon / (varepsilon - 1) * AUX1_LEAD;
+	#R = max( 1, ( PI_STEADY / beta_STEADY ) * ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) * M );
 	1 = R * beta_LEAD * ( C / C_LEAD ) / PI_LEAD;
 	AUX1 = MC * (Y/C) + theta * beta_LEAD * PI_LEAD^(varepsilon) * AUX1_LEAD;
 	AUX2 = PI_STAR * ((Y/C) + theta * beta_LEAD * ((PI_LEAD^(varepsilon-1))/PI_STAR_LEAD) * AUX2_LEAD);
-	log( R ) = log( max( 1, ( PI_STEADY / beta_STEADY )^(1 - rho_r) * R_LAG^rho_r * ( ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) )^(1 - rho_r) * M) );
 	log( NU ) = log( theta * (PI^varepsilon) * NU_LAG + (1 - theta) * PI_STAR^(-varepsilon) );
 end;
 
@@ -58,14 +56,14 @@ steady_state_model;
 	PI_ = PI_STEADY;
 	PI_STAR_ = ( (1 - theta * (1 / PI_)^(1 - varepsilon) ) / (1 - theta) )^(1/(1 - varepsilon));
 	NU_ = ( ( 1 - theta) / (1 - theta * PI_ ^varepsilon) ) * PI_STAR_ ^(-varepsilon);
-	W_ = PI_STAR_ * ((varepsilon - 1) / varepsilon) * ( (1 - theta * beta_STEADY * PI_ ^varepsilon)/(1 - theta * beta_STEADY * PI_ ^(varepsilon-1)));
-	C_ = (W_ /(psi * ((1/(1 - Sg_STEADY)) * NU_)^vartheta))^(1/(1 + vartheta));
+	W_ = A_STEADY * PI_STAR_ * ((varepsilon - 1) / varepsilon) * ( (1 - theta * beta_STEADY * PI_ ^varepsilon)/(1 - theta * beta_STEADY * PI_ ^(varepsilon-1)));
+	C_ = (W_ /(psi * ((1/(1 - Sg_STEADY)) * NU_/ A_STEADY)^vartheta))^(1/(1 + vartheta));
 	Y_ = (1 / (1 - Sg_STEADY)) * C_;
 	G_ = Sg_STEADY * Y_;
-	L_ = Y_ *NU_;
-	MC_ = W_;
+	L_ = Y_ *NU_ / A_STEADY;
+	MC_ = W_ / A_STEADY;
 	R_ = PI_ / beta_STEADY;
-	AUX1_ = W_ * (Y_ /C_)/(1 - theta * beta_STEADY * PI_ ^varepsilon);
+	AUX1_ = W_ / A_STEADY * (Y_ /C_)/(1 - theta * beta_STEADY * PI_ ^varepsilon);
 	AUX2_ = PI_STAR_ * (Y_ /C_)/(1 - theta * beta_STEADY * PI_ ^(varepsilon-1));
 	@#include "InsertNewSteadyStateEquations.mod"
 end;

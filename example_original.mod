@@ -1,7 +1,7 @@
 var Y, C, R, PI, W, L, PI_STAR, NU, MC, AUX1, AUX2, A, G, beta, M, Sg;
 varexo epsilon_a, epsilon_m, epsilon_g, epsilon_b;
 
-parameters beta_STEADY, A_STEADY, Sg_STEADY, PI_STEADY, varepsilon, theta, phi_pi, phi_y, rho_a, rho_r, rho_b, rho_g, sigma_g, sigma_b, sigma_a, sigma_m, vartheta, psi;
+parameters beta_STEADY, A_STEADY, Sg_STEADY, PI_STEADY, varepsilon, theta, phi_pi, phi_y, rho_a, rho_b, rho_g, sigma_g, sigma_b, sigma_a, sigma_m, vartheta, psi;
 
 beta_STEADY = 0.994;
 Sg_STEADY = 0.2;
@@ -13,7 +13,6 @@ theta = 0.75;
 varepsilon = 6;
 phi_pi = 1.5;
 phi_y = 0.25;
-rho_r = 0;
 rho_a = 0.9;
 rho_g = 0.8;
 rho_b = 0.8;
@@ -29,7 +28,7 @@ model;
 	varepsilon * AUX1 = (varepsilon - 1) * AUX2;
 	AUX1 = MC * (Y/C) + theta * beta(+1) * PI(+1)^(varepsilon) * AUX1(+1);
 	AUX2 = PI_STAR * ((Y/C) + theta * beta(+1) * ((PI(+1)^(varepsilon-1))/PI_STAR(+1)) * AUX2(+1));
-	R = max(1,( PI_STEADY / beta_STEADY )^(1 - rho_r) * R(-1)^rho_r * ( ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) )^(1 - rho_r) * M);
+	R = max( 1, ( PI_STEADY / beta_STEADY ) * ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) * M );
 	G = Sg*Y;
 	1 = theta * (PI^(varepsilon-1)) + (1 - theta) * PI_STAR^(1 - varepsilon);
 	NU = theta * (PI^varepsilon) * NU(-1) + (1 - theta) * PI_STAR^(-varepsilon);
