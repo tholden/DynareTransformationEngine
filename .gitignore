@@ -1,0 +1,7 @@
+/example/
+/example_original/
+*.jnl
+*.log
+*.m
+*.eps
+*.mat
