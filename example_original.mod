@@ -70,4 +70,4 @@ end;
 steady;
 check;
 
-stoch_simul( order = 3, irf = 40, periods = 1100, irf_shocks = ( epsilon_b ), replic = 50 );
+stoch_simul( order = 3, irf = 40, periods = 1100, irf_shocks = ( epsilon_b ), replic = 100 );
