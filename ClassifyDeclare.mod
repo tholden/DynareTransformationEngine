@@ -38,7 +38,7 @@
 	@#endfor
 	// Then equations to define its leads
 	@#define LeadString = ""
-	@#for Lead in 1 : MaximumLag
+	@#for Lead in 1 : MaximumLead
 		@#define LeadString = LeadString + "_LEAD"
 		@#define CurrentLead = Numbers[ Lead ]
 		@#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + LeadString + " = " + InverseTransformationPrefix + FullVariableName + "(" + CurrentLead + ")" + InverseTransformationSuffix + ";" ]
