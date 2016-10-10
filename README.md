@@ -3,7 +3,7 @@ DynareTransformationEngine
 
 A set of mod files for automatically transforming variables into logs or logits as appropriate, and for adding similarly transformed AR(1) shock processes.
 
-See example.mod for basic usage.
+Compare `example_original.mod` (not using the engine) and `example.mod` (using the engine) to see basic usage.
 
 For leads greater than 1, insert: `@#define MaximumLead = 2` at the top of your MOD file and then use `..._LEAD2`, `..._LEAD3`, etc.
 
