@@ -1,15 +1,18 @@
 @#include "Initialize.mod"
 @#define UsingGrowthSyntax
-@#define EndoVariables = EndoVariables + [ "PI", "0", "theta^(1/(1-varepsilon))", 1 ]
-// 1 here is the growth rate of PI
-@#define EndoVariables = EndoVariables + [ "L", "0", "((1+vartheta)/psi)^(1/(1+vartheta))", 1 ]
-@#define EndoVariables = EndoVariables + [ "NU", "0", "Inf", 1 ]
-@#define EndoVariables = EndoVariables + [ "AUX1", "0", "Inf", 1 ]
+@#define EndoVariables = EndoVariables + [ "PI", "0", "theta^(1/(1-varepsilon))", "1" ]
+// 1 is the growth rate of the stochastic trend of PI.
+@#define EndoVariables = EndoVariables + [ "L", "0", "((1+vartheta)/psi)^(1/(1+vartheta))", "GN" ]
+// GN is the growth rate of the stochastic trend of L.
+// Whatever goes in that slot must be an MLV, with the usual _LEAD and _LAG defined for it
+// This happens automatically if it is defined using the transformation engine, as here.
+@#define EndoVariables = EndoVariables + [ "NU", "0", "Inf", "1" ]
+@#define EndoVariables = EndoVariables + [ "AUX1", "0", "Inf", "1" ]
 @#define ShockProcesses = ShockProcesses + [ "A", "0", "Inf", "A_STEADY", "rho_a", "sigma_a" ]
 @#define ShockProcesses = ShockProcesses + [ "M", "0", "Inf", "1", "0", "-sigma_m" ]
 @#define ShockProcesses = ShockProcesses + [ "beta", "0", "1", "beta_STEADY", "rho_b", "sigma_b" ]
 @#define ShockProcesses = ShockProcesses + [ "Sg", "0", "1", "Sg_STEADY", "rho_g", "sigma_g" ]
-@#define GrowingShockProcesses = GrowingShockProcesses + [ "Z", "1.02", "0.99", "0.05" ]
+@#define ShockProcesses = ShockProcesses + [ "GN", "0", "Inf", "1.01", "0.5", "0.01" ]
 @#include "CreateShocks.mod"
 @#include "ClassifyDeclare.mod"
 

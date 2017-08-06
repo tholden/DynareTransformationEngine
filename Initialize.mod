@@ -13,9 +13,6 @@
 @#ifndef ShockProcesses
 	@#define ShockProcesses = EmptyArray
 @#endif
-@#ifndef GrowingShockProcesses
-	@#define GrowingShockProcesses = EmptyArray
-@#endif
 @#ifndef ExtraShockBlockLines
 	@#define ExtraShockBlockLines = EmptyArray
 @#endif
