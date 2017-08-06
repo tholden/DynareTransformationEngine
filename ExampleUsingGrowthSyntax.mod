@@ -4,7 +4,7 @@
 // 1 is the growth rate of the stochastic trend of PI.
 @#define EndoVariables = EndoVariables + [ "L", "0", "((1+vartheta)/psi)^(1/(1+vartheta))", "GN" ]
 // GN is the growth rate of the stochastic trend of L.
-// Whatever goes in that slot must be an MLV, with the usual _LEAD and _LAG defined for it
+// Whatever goes in that slot must be an MLV, with the usual _LEAD1, _LAG1, etc. defined for it
 // This happens automatically if it is defined using the transformation engine, as here.
 @#define EndoVariables = EndoVariables + [ "NU", "0", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "AUX1", "0", "Inf", "1" ]
