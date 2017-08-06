@@ -10,9 +10,11 @@
 @#ifndef ExtraSteadyStateEquations
 	@#define ExtraSteadyStateEquations = EmptyArray
 @#endif
-// The code below is for an extension to be introduced shortly.
 @#ifndef ShockProcesses
 	@#define ShockProcesses = EmptyArray
+@#endif
+@#ifndef GrowingShockProcesses
+	@#define GrowingShockProcesses = EmptyArray
 @#endif
 @#ifndef ExtraShockBlockLines
 	@#define ExtraShockBlockLines = EmptyArray
