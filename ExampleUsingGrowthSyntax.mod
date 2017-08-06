@@ -1,5 +1,5 @@
 @#include "Initialize.mod"
-@#define UsingGrowthSyntax
+@#define UsingGrowthSyntax = 1
 @#define EndoVariables = EndoVariables + [ "PI", "0", "theta^(1/(1-varepsilon))", "1" ]
 // 1 is the growth rate of the stochastic trend of PI.
 @#define EndoVariables = EndoVariables + [ "L", "0", "((1+vartheta)/psi)^(1/(1+vartheta))", "GN" ]
