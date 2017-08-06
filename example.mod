@@ -45,11 +45,12 @@ model;
 	#MC = W/A;
 	#AUX2 = varepsilon / (varepsilon - 1) * AUX1;
 	#AUX2_LEAD = varepsilon / (varepsilon - 1) * AUX1_LEAD;
-	#R = max( 1, ( PI_STEADY / beta_STEADY ) * ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) * M );
+	#R = ( ( PI_STEADY / beta_STEADY ) * ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) * M );
 	1 = R * beta_LEAD * ( C / C_LEAD ) / PI_LEAD;
 	AUX1 = MC * (Y/C) + theta * beta_LEAD * PI_LEAD^(varepsilon) * AUX1_LEAD;
 	AUX2 = PI_STAR * ((Y/C) + theta * beta_LEAD * ((PI_LEAD^(varepsilon-1))/PI_STAR_LEAD) * AUX2_LEAD);
 	log( NU ) = log( theta * (PI^varepsilon) * NU_LAG + (1 - theta) * PI_STAR^(-varepsilon) );
+	#error = ( R * beta_LEAD * ( C / C_LEAD ) / PI_LEAD - 1 ) / 1;
 end;
 
 steady_state_model;
@@ -75,4 +76,4 @@ end;
 steady;
 check;
 
-stoch_simul( order = 3, irf = 40, periods = 1100, irf_shocks = ( epsilon_beta ), replic = 100 );
+stoch_simul( order = 3, irf = 0, periods = 1100, irf_shocks = ( epsilon_beta ), replic = 100 ) error;

@@ -23,12 +23,13 @@ sigma_g = 0.0032;
 
 model;
 	1 = R * beta(+1) * ( C / C(+1) ) / PI(+1);
+	#error = ( R * beta(+1) * ( C / C(+1) ) / PI(+1) - 1 ) / 1;
 	W = psi * L^vartheta*C / ( 1 - psi * L^(1+vartheta) / ( 1+vartheta) ) * ( 1 - psi * STEADY_STATE(L)^(1+vartheta) / ( 1+vartheta) );
 	MC = W/A;
 	varepsilon * AUX1 = (varepsilon - 1) * AUX2;
 	AUX1 = MC * (Y/C) + theta * beta(+1) * PI(+1)^(varepsilon) * AUX1(+1);
 	AUX2 = PI_STAR * ((Y/C) + theta * beta(+1) * ((PI(+1)^(varepsilon-1))/PI_STAR(+1)) * AUX2(+1));
-	R = max( 1, ( PI_STEADY / beta_STEADY ) * ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) * M );
+	R = ( ( PI_STEADY / beta_STEADY ) * ((PI/STEADY_STATE(PI))^phi_pi) * ((Y/STEADY_STATE(Y))^phi_y) * M );
 	G = Sg*Y;
 	1 = theta * (PI^(varepsilon-1)) + (1 - theta) * PI_STAR^(1 - varepsilon);
 	NU = theta * (PI^varepsilon) * NU(-1) + (1 - theta) * PI_STAR^(-varepsilon);
@@ -70,4 +71,4 @@ end;
 steady;
 check;
 
-stoch_simul( order = 3, irf = 40, periods = 1100, irf_shocks = ( epsilon_b ), replic = 100 );
+stoch_simul( order = 3, irf = 0, periods = 1100, irf_shocks = ( epsilon_b ), replic = 100 ) error;
