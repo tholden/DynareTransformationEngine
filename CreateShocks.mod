@@ -8,7 +8,7 @@
     @#define Rho = ShockProcesses[IndexIntoShockProcesses+4]
     @#define Sigma = ShockProcesses[IndexIntoShockProcesses+5]
     // Add the shock process as an endogenous, so that everything will be defined for us
-    @#if UsingGrowthSyntax == 1
+    @#if UsingGrowthSyntax
         @#define EndoVariables = EndoVariables + [ VariableName, Minimum, Maximum, "1" ]
     @#else
         @#define EndoVariables = EndoVariables + [ VariableName, Minimum, Maximum ]
