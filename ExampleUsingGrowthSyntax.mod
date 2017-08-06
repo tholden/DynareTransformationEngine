@@ -12,7 +12,7 @@
 @#define ShockProcesses = ShockProcesses + [ "M", "0", "Inf", "1", "0", "-sigma_m" ]
 @#define ShockProcesses = ShockProcesses + [ "beta", "0", "1", "beta_STEADY", "rho_b", "sigma_b" ]
 @#define ShockProcesses = ShockProcesses + [ "Sg", "0", "1", "Sg_STEADY", "rho_g", "sigma_g" ]
-@#define ShockProcesses = ShockProcesses + [ "GN", "0", "Inf", "1.01", "0.5", "0.01" ]
+@#define ShockProcesses = ShockProcesses + [ "GN", "0", "Inf", "1.00", "0.5", "0.01" ]
 @#include "CreateShocks.mod"
 @#include "ClassifyDeclare.mod"
 
