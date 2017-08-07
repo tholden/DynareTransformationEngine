@@ -1,3 +1,3 @@
 @#for ShockBlockLine in ExtraShockBlockLines
-	@{ShockBlockLine}
+    @{ShockBlockLine}
 @#endfor

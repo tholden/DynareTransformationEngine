@@ -1,3 +1,3 @@
 @#for NewEquation in ExtraModelEquations
-	@{NewEquation}
+    @{NewEquation}
 @#endfor

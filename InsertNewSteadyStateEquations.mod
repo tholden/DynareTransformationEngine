@@ -1,3 +1,3 @@
 @#for NewEquation in ExtraSteadyStateEquations
-	@{NewEquation}
+    @{NewEquation}
 @#endfor
