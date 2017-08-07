@@ -4,6 +4,9 @@
 @#ifndef EndoVariables
     @#define EndoVariables = EmptyArray
 @#endif
+@#ifndef PureTrendEndoVariables
+    @#define PureTrendEndoVariables = EmptyArray
+@#endif
 @#ifndef ExtraModelEquations
     @#define ExtraModelEquations = EmptyArray
 @#endif

@@ -6,6 +6,8 @@
 // GN is the growth rate of the stochastic trend of L.
 // Whatever goes in that slot must be an MLV, with the usual _LEAD1, _LAG1, etc. defined for it
 // This happens automatically if it is defined using the transformation engine, as here.
+@#define PureTrendEndoVariables = PureTrendEndoVariables + [ "N", "GN" ]
+// Defines N as a variable with stochastic trend N, whose growth rate is GN.
 @#define EndoVariables = EndoVariables + [ "NU", "0", "Inf", "1" ]
 @#define EndoVariables = EndoVariables + [ "AUX1", "0", "Inf", "1" ]
 @#define ShockProcesses = ShockProcesses + [ "A", "0", "Inf", "A_STEADY", "rho_a", "sigma_a" ]
