@@ -2,7 +2,7 @@
     @#error "A variable cannot have identical bounds"
 @#endif
 @#if Minimum == "-Inf"
-    @#if Maximum == "Inf"
+    @#if Maximum == "Inf" || Maximum == "+Inf"
         // @{VariableName} does not need to be transformed
         @#define VariableNamePrefix = "level"
         @#define InverseTransformationPrefix = ""
@@ -27,7 +27,7 @@
         @#endif
     @#endif
 @#else
-    @#if Maximum == "Inf"
+    @#if Maximum == "Inf" || Maximum == "+Inf"
         @#if Minimum == "0"
             // @{VariableName} is always positive
             @#define VariableNamePrefix = "log"
