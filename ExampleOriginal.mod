@@ -71,4 +71,8 @@ end;
 steady;
 check;
 
-stoch_simul( order = 3, irf = 0, periods = 1100, irf_shocks = ( epsilon_b ), replic = 100 ) error;
+@#ifdef dynareOBC
+    stoch_simul( order = 3, irf = 0, periods = 1100, irf_shocks = ( epsilon_b ), replic = 100 ) error;
+@#else
+    stoch_simul( order = 3, irf = 0, periods = 1100, irf_shocks = ( epsilon_b ), replic = 100 );
+@#endif
