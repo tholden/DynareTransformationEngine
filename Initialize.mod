@@ -1,6 +1,8 @@
 // Define the empty array for convenience.
 // Dynare's preprocessor does not support [ ] for an empty array
 @#define EmptyArray = [ "" ] - [ "" ]
+@#define EmptyNumericArray = [ 0 ] - [ 0 ]
+
 @#ifndef EndoVariables
     @#define EndoVariables = EmptyArray
 @#endif
