@@ -36,4 +36,6 @@
 @#ifndef PureTrendEndoVariables
     @#define PureTrendEndoVariables = EmptyArray
 @#endif
-@#define UsingGrowthSyntax = 0
+@#ifndef UsingGrowthSyntax
+    @#define UsingGrowthSyntax = 0
+@#endif
