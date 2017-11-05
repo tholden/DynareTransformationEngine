@@ -4,9 +4,6 @@
 @#ifndef EndoVariables
     @#define EndoVariables = EmptyArray
 @#endif
-@#ifndef PureTrendEndoVariables
-    @#define PureTrendEndoVariables = EmptyArray
-@#endif
 @#ifndef ExtraModelEquations
     @#define ExtraModelEquations = EmptyArray
 @#endif
@@ -18,5 +15,19 @@
 @#endif
 @#ifndef ExtraShockBlockLines
     @#define ExtraShockBlockLines = EmptyArray
+@#endif
+
+@#ifndef SpatialDimension
+    @#define SpatialDimension = 0
+@#endif
+@#ifndef SpatialPointsPerDimension
+    @#define SpatialPointsPerDimension = 1
+@#endif
+@#ifndef SpatialShockProcesses
+    @#define SpatialShockProcesses = EmptyArray
+@#endif
+
+@#ifndef PureTrendEndoVariables
+    @#define PureTrendEndoVariables = EmptyArray
 @#endif
 @#define UsingGrowthSyntax = 0
