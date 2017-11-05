@@ -3,7 +3,6 @@
 /ExampleUsingGrowthSyntax/
 *.jnl
 *.log
-*.m
 *.eps
 *.mat
 *-macroexp.mod
