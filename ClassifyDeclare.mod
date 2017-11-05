@@ -16,9 +16,6 @@
 @#else
     @#define NumEndoVariables = length( EndoVariables ) / 3
 @#endif
-// Define an array of numbers
-// Useful as Dynare's preprocessor does not support converting integers to strings
-@#include "DefineNumbers.mod"
 
 @#for VariableIndex in 1 : NumEndoVariables
     @#if UsingGrowthSyntax

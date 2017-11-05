@@ -3,6 +3,10 @@
 @#define EmptyArray = [ "" ] - [ "" ]
 @#define EmptyNumericArray = [ 0 ] - [ 0 ]
 
+// Define an array of numbers
+// Useful as Dynare's preprocessor does not support converting integers to strings
+@#include "DefineNumbers.mod"
+
 @#ifndef EndoVariables
     @#define EndoVariables = EmptyArray
 @#endif
