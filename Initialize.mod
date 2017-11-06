@@ -27,7 +27,7 @@
     @#define SpatialDimensions = 0
 @#endif
 @#ifndef SpatialPointsPerDimension
-    @#define SpatialPointsPerDimension = 1
+    @#define SpatialPointsPerDimension = 128
 @#endif
 @#ifndef SpatialShockProcesses
     @#define SpatialShockProcesses = EmptyStringArray
