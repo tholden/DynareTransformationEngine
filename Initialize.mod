@@ -1,6 +1,6 @@
 // Define the empty array for convenience.
 // Dynare's preprocessor does not support [ ] for an empty array
-@#define EmptyArray = [ "" ] - [ "" ]
+@#define EmptyStringArray = [ "" ] - [ "" ]
 @#define EmptyNumericArray = [ 0 ] - [ 0 ]
 
 // Define an array of numbers
@@ -8,19 +8,19 @@
 @#include "DefineNumbers.mod"
 
 @#ifndef EndoVariables
-    @#define EndoVariables = EmptyArray
+    @#define EndoVariables = EmptyStringArray
 @#endif
 @#ifndef ExtraModelEquations
-    @#define ExtraModelEquations = EmptyArray
+    @#define ExtraModelEquations = EmptyStringArray
 @#endif
 @#ifndef ExtraSteadyStateEquations
-    @#define ExtraSteadyStateEquations = EmptyArray
+    @#define ExtraSteadyStateEquations = EmptyStringArray
 @#endif
 @#ifndef ShockProcesses
-    @#define ShockProcesses = EmptyArray
+    @#define ShockProcesses = EmptyStringArray
 @#endif
 @#ifndef ExtraShockBlockLines
-    @#define ExtraShockBlockLines = EmptyArray
+    @#define ExtraShockBlockLines = EmptyStringArray
 @#endif
 
 @#ifndef SpatialDimensions
@@ -30,11 +30,11 @@
     @#define SpatialPointsPerDimension = 1
 @#endif
 @#ifndef SpatialShockProcesses
-    @#define SpatialShockProcesses = EmptyArray
+    @#define SpatialShockProcesses = EmptyStringArray
 @#endif
 
 @#ifndef PureTrendEndoVariables
-    @#define PureTrendEndoVariables = EmptyArray
+    @#define PureTrendEndoVariables = EmptyStringArray
 @#endif
 @#ifndef UsingGrowthSyntax
     @#define UsingGrowthSyntax = 0
