@@ -6,3 +6,4 @@
 *.eps
 *.mat
 *-macroexp.mod
+test*.*
