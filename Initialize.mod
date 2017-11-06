@@ -31,10 +31,7 @@
 @#endif
 @#ifndef SpatialShape
     @#define SpatialShape = "Torus"
-    // The other supported options are "Plane" and "ManhattanTorus"
-    // "Plane" has the usual Euclidean metric
-    // "Torus" has correlation function derived from the Euclidean metric taken from the plane
-    // "ManhattanTorus" has correlation function given by the product of the 1 dimensional "s" functions
+    // The other supported option is "Plane"
 @#endif
 @#ifndef SpatialNorm
     @#define SpatialNorm = "2"
