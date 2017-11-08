@@ -6,7 +6,7 @@
 // The other option is "Plane"
 @#define SpatialNorm = "2"
 
-@#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "gamma", "(exp(-phi*@+phi/2)+exp(phi*@-phi/2))/(exp(phi/2)+exp(-phi/2))#", "(exp(-lambda*@+lambda/2)+exp(lambda*@-lambda/2))/(exp(lambda/2)+exp(-lambda/2))#" ]
+@#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "chi", "(exp(-eta*@+eta/2)+exp(eta*@-eta/2))/(exp(eta/2)+exp(-eta/2))#", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
 // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, the amount of diffusion, the function governing diffusion (with "@" representing the input distance, and "#" at the end of the string) and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
 
 @#include "CreateShocks.mod"
@@ -21,15 +21,15 @@
 
 @#include "ClassifyDeclare.mod"
 
-parameters alpha beta nu rho gamma phi lambda sigma;
+parameters alpha beta nu rho chi eta zeta sigma;
 
 alpha = 0.3;
 beta = 0.99;
 nu = 2;
 rho = 0.95;
-gamma = 0.5;
-phi = 8;
-lambda = 4;
+chi = 0.5;
+eta = 8;
+zeta = 4;
 sigma = 0.02;
 
 model;
