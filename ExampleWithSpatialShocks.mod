@@ -21,7 +21,7 @@
 
 @#include "ClassifyDeclare.mod"
 
-parameters alpha beta nu rho gamma phi lambda sigma kappa;
+parameters alpha beta nu rho gamma phi lambda sigma;
 
 alpha = 0.3;
 beta = 0.99;
