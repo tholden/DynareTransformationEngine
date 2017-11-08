@@ -14,4 +14,3 @@ function CreateDefineNumbersMod( MaxNumber )
         disp( 'Error opening file. CreateDefineNumbersMod did not create DefineNumbers.mod.' );
     end
 end
-
