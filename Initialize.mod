@@ -1,12 +1,6 @@
-// Define the empty array for convenience.
-// Dynare's preprocessor does not support [ ] for an empty array
 @#define EmptyStringArray = [ "" ] - [ "" ]
 @#define EmptyNumericArray = [ 0 ] - [ 0 ]
-
-// Define an array of numbers
-// Useful as Dynare's preprocessor does not support converting integers to strings
 @#include "DefineNumbers.mod"
-
 @#ifndef EndoVariables
     @#define EndoVariables = EmptyStringArray
 @#endif
@@ -22,7 +16,6 @@
 @#ifndef ExtraShockBlockLines
     @#define ExtraShockBlockLines = EmptyStringArray
 @#endif
-
 @#ifndef SpatialDimensions
     @#define SpatialDimensions = 0
 @#endif
@@ -39,7 +32,9 @@
 @#ifndef SpatialShockProcesses
     @#define SpatialShockProcesses = EmptyStringArray
 @#endif
-
+@#ifndef SpatialFunctionLength
+    @#define SpatialFunctionLength = 1024
+@#endif
 @#ifndef PureTrendEndoVariables
     @#define PureTrendEndoVariables = EmptyStringArray
 @#endif

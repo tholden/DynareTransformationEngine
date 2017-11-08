@@ -1,9 +1,8 @@
-/Example/
-/ExampleOriginal/
-/ExampleUsingGrowthSyntax/
 *.jnl
 *.log
 *.eps
 *.mat
 *-macroexp.mod
 test*.*
+checksum
+Example*.m
