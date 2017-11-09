@@ -1,6 +1,12 @@
 @#define EmptyStringArray = [ "" ] - [ "" ]
 @#define EmptyNumericArray = [ 0 ] - [ 0 ]
 @#include "DefineNumbers.mod"
+@#ifndef MaximumLead
+    @#define MaximumLead = 1
+@#endif
+@#ifndef MaximumLag
+    @#define MaximumLag = 1
+@#endif
 @#ifndef EndoVariables
     @#define EndoVariables = EmptyStringArray
 @#endif

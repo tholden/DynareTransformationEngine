@@ -2,7 +2,7 @@ function CreateDefineNumbersMod( MaxNumber )
     FileID = fopen( 'DefineNumbers.mod', 'w' );
     if FileID > 0
         fprintf( FileID, '@#ifndef Numbers\n    @#define Numbers = [ ' );
-        for i = 1 : MaxNumber
+        for i = 0 : MaxNumber
             fprintf( FileID, '"%d"', i );
             if i < MaxNumber
                 fprintf( FileID, ', ' );

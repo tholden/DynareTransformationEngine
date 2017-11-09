@@ -112,9 +112,9 @@
                 @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "corr " + ShockName + IndicesStringArray[Point1] + ", " + ShockName + IndicesStringArray[Point2] + " = " + OutputString + ";" ]
             @#endif
         @#endfor
-        @#define Integral = Integral + " ) / ( " + Numbers[SpatialPointsPerDimension] + " ^ " + Numbers[SpatialDimensions] + " )"
+        @#define Integral = Integral + " ) / ( " + Numbers[SpatialPointsPerDimension+1] + " ^ " + Numbers[SpatialDimensions+1] + " )"
         @#if DefineKappa
-            @#define NewModelEquation = NewModelEquation + " ) / ( " + Numbers[SpatialPointsPerDimension] + " ^ " + Numbers[SpatialDimensions] + " );"
+            @#define NewModelEquation = NewModelEquation + " ) / ( " + Numbers[SpatialPointsPerDimension+1] + " ^ " + Numbers[SpatialDimensions+1] + " );"
             @#define ExtraModelEquations = ExtraModelEquations + [ NewModelEquation ]
         @#endif
         @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + KappaIndicesString + " ) " + " + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]

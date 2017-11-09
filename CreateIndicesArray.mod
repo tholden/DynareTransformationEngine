@@ -4,7 +4,7 @@
     @#if Depth == SpatialDimensions
         @#define Name = ""
         @#for Dimension in 1 : SpatialDimensions
-            @#define Name = Name + "_" + Numbers[Indices[Dimension]]
+            @#define Name = Name + "_" + Numbers[Indices[Dimension]+1]
             @#define IndicesArray = IndicesArray + [ Indices[Dimension] ]
         @#endfor
         @#define IndicesStringArray = IndicesStringArray + [ Name ]

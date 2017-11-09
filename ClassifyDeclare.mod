@@ -1,9 +1,3 @@
-@#ifndef MaximumLead
-    @#define MaximumLead = 1
-@#endif
-@#ifndef MaximumLag
-    @#define MaximumLag = 1
-@#endif
 @#if UsingGrowthSyntax
     @#define NumEndoVariables = length( EndoVariables ) / 4
     @#define NumPureTrendEndoVariables = length( PureTrendEndoVariables ) / 2
@@ -32,14 +26,14 @@
         @#define LagString = ""
         @#for Lag in 1 : MaximumLag
             @#define LagString = LagString + "_LAG"
-            @#define CurrentLag = Numbers[ Lag ]
+            @#define CurrentLag = Numbers[ Lag + 1 ]
             @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + LagString + " = "  + InverseTransformationPrefix + FullVariableName + "(-" + CurrentLag + ")" + InverseTransformationSuffix + ";" ]
             @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + "_LAG" + CurrentLag + " = " + VariableName + LagString + ";" ]
         @#endfor
         @#define LeadString = ""
         @#for Lead in 1 : MaximumLead
             @#define LeadString = LeadString + "_LEAD"
-            @#define CurrentLead = Numbers[ Lead ]
+            @#define CurrentLead = Numbers[ Lead + 1 ]
             @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + LeadString + " = " + InverseTransformationPrefix + FullVariableName + "(" + CurrentLead + ")" + InverseTransformationSuffix + ";" ]
             @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + "_LEAD" + CurrentLead + " = " + VariableName + LeadString + ";" ]
         @#endfor
@@ -60,9 +54,9 @@
             @#define LagString = ""
             @#for Lag in 1 : MaximumLag
                 @#define LagString = LagString + "_LAG"
-                @#define CurrentLag = Numbers[ Lag ]
+                @#define CurrentLag = Numbers[ Lag + 1 ]
                 @#if Lag > 1
-                    @#define CurrentLagM1 = Numbers[ Lag - 1 ]
+                    @#define CurrentLagM1 = Numbers[ Lag ]
                     @#define GrowthRateProduct = GrowthRateProduct + "*" + GrowthRate + "_LAG" + CurrentLagM1
                 @#else
                     @#define GrowthRateProduct = GrowthRate
@@ -73,11 +67,11 @@
             @#define LeadString = ""
             @#for Lead in 1 : MaximumLead
                 @#define LeadString = LeadString + "_LEAD"
-                @#define CurrentLead = Numbers[ Lead ]
-                @#if Lag > 1
+                @#define CurrentLead = Numbers[ Lead + 1 ]
+                @#if Lead > 1
                     @#define GrowthRateProduct = GrowthRateProduct + "*" + GrowthRate + "_LEAD" + CurrentLead
                 @#else
-                    @#define GrowthRateProduct = GrowthRate
+                    @#define GrowthRateProduct = GrowthRate + "_LEAD" + CurrentLead
                 @#endif
                 @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + LeadString + " = ( " + InverseTransformationPrefix + FullVariableName + "(" + CurrentLead + ")" + InverseTransformationSuffix + " ) * ( " + GrowthRateProduct + " );" ]
                 @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + "_LEAD" + CurrentLead + " = " + VariableName + LeadString + ";" ]
@@ -95,9 +89,9 @@
             @#define LagString = ""
             @#for Lag in 1 : MaximumLag
                 @#define LagString = LagString + "_LAG"
-                @#define CurrentLag = Numbers[ Lag ]
+                @#define CurrentLag = Numbers[ Lag + 1 ]
                 @#if Lag > 1
-                    @#define CurrentLagM1 = Numbers[ Lag - 1 ]
+                    @#define CurrentLagM1 = Numbers[ Lag ]
                     @#define GrowthRateProduct = GrowthRateProduct + "*" + GrowthRate + "_LAG" + CurrentLagM1
                 @#else
                     @#define GrowthRateProduct = GrowthRate
@@ -108,11 +102,11 @@
             @#define LeadString = ""
             @#for Lead in 1 : MaximumLead
                 @#define LeadString = LeadString + "_LEAD"
-                @#define CurrentLead = Numbers[ Lead ]
-                @#if Lag > 1
+                @#define CurrentLead = Numbers[ Lead + 1 ]
+                @#if Lead > 1
                     @#define GrowthRateProduct = GrowthRateProduct + "*" + GrowthRate + "_LEAD" + CurrentLead
                 @#else
-                    @#define GrowthRateProduct = GrowthRate
+                    @#define GrowthRateProduct = GrowthRate + "_LEAD" + CurrentLead
                 @#endif
                 @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + LeadString + " = " + GrowthRateProduct + ";" ]
                 @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + "_LEAD" + CurrentLead + " = " + VariableName + LeadString + ";" ]
