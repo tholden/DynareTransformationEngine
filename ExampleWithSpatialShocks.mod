@@ -1,13 +1,22 @@
 @#include "Initialize.mod"
 
+// Options determining the spatial topology
 @#define SpatialDimensions = 1
 @#define SpatialPointsPerDimension = 100
+@#define SpatialNorm = "2"
 @#define SpatialShape = "Torus"
 // The other option is "Plane"
-@#define SpatialNorm = "2"
 
-@#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "chi", "(exp(-eta*@+eta/2)+exp(eta*@-eta/2))/(exp(eta/2)+exp(-eta/2))#", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
-// In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, the amount of diffusion, the function governing diffusion (with "@" representing the input distance, and "#" at the end of the string) and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+// This is an option specific to this file. Setting it to 1 turns on spatial diffusion of technology here.
+@#define WithDiffusion = 1
+
+@#if WithDiffusion
+    @#define SpatialDiffusionShockProcesses = SpatialDiffusionShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "chi", "(exp(-eta*@+eta/2)+exp(eta*@-eta/2))/(exp(eta/2)+exp(-eta/2))#", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
+    // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, the amount of diffusion, the function governing diffusion (with "@" representing the input distance, and "#" at the end of the string) and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+@#else
+    @#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
+    // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+@#endif
 
 @#include "CreateShocks.mod"
 

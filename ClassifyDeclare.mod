@@ -28,7 +28,7 @@
         @#include "InternalClassifyDeclare.mod"
         var @{FullVariableName};
         @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + " = " + InverseTransformationPrefix + FullVariableName + InverseTransformationSuffix + ";" ]
-        @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ FullVariableName + " = " + TransformationPrefix + VariableName + "_" + TrnasformationSuffix + ";" ]
+        @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ FullVariableName + " = " + TransformationPrefix + VariableName + "_" + TransformationSuffix + ";" ]
         @#define LagString = ""
         @#for Lag in 1 : MaximumLag
             @#define LagString = LagString + "_LAG"
@@ -56,7 +56,7 @@
             @#include "InternalClassifyDeclare.mod"
             var @{FullVariableName};
             @#define ExtraModelEquations = ExtraModelEquations + [ "#" + VariableName + " = " + InverseTransformationPrefix + FullVariableName + InverseTransformationSuffix + ";" ]
-            @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ FullVariableName + " = " + TransformationPrefix + VariableName + "_" + TrnasformationSuffix + ";" ]
+            @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ FullVariableName + " = " + TransformationPrefix + VariableName + "_" + TransformationSuffix + ";" ]
             @#define LagString = ""
             @#for Lag in 1 : MaximumLag
                 @#define LagString = LagString + "_LAG"

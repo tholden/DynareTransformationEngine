@@ -32,6 +32,9 @@
 @#ifndef SpatialShockProcesses
     @#define SpatialShockProcesses = EmptyStringArray
 @#endif
+@#ifndef SpatialDiffusionShockProcesses
+    @#define SpatialDiffusionShockProcesses = EmptyStringArray
+@#endif
 @#ifndef SpatialFunctionLength
     @#define SpatialFunctionLength = 1024
 @#endif

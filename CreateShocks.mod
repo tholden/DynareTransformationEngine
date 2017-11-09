@@ -14,7 +14,7 @@
     @#endif
     @#include "InternalClassifyDeclare.mod"
     @#define ShockName = "epsilon_" + VariableName
-    @#define TransformedSteadyState = "(" + TransformationPrefix + SteadyState + TrnasformationSuffix + ")"
+    @#define TransformedSteadyState = TransformationPrefix + SteadyState + TransformationSuffix
     @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + "(-1)" + " + (" + Sigma + ") * " + ShockName + ";" ]
     @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ VariableName + "_ = " + SteadyState + ";" ]
     varexo @{ShockName};
@@ -28,18 +28,16 @@
     @#include "CreateIndicesArray.mod"
 @#endif
 @#define SpatialNumPoints = length( IndicesStringArray )
-@#define NumSpatialShockProcesses = length( SpatialShockProcesses ) / 9
+@#define NumSpatialShockProcesses = length( SpatialShockProcesses ) / 7
 @#for ShockIndex in 1 : NumSpatialShockProcesses
-    @#define IndexIntoShockProcesses = ShockIndex * 9 - 8
+    @#define IndexIntoShockProcesses = ShockIndex * 7 - 6
     @#define VariableName = SpatialShockProcesses[IndexIntoShockProcesses]
     @#define Minimum = SpatialShockProcesses[IndexIntoShockProcesses+1]
     @#define Maximum = SpatialShockProcesses[IndexIntoShockProcesses+2]
     @#define SteadyState = SpatialShockProcesses[IndexIntoShockProcesses+3]
     @#define Rho = SpatialShockProcesses[IndexIntoShockProcesses+4]
     @#define Sigma = SpatialShockProcesses[IndexIntoShockProcesses+5]
-    @#define DiffusionAmount = SpatialShockProcesses[IndexIntoShockProcesses+6]
-    @#define DiffusionFunction = SpatialShockProcesses[IndexIntoShockProcesses+7]
-    @#define ShockFunction = SpatialShockProcesses[IndexIntoShockProcesses+8]
+    @#define ShockFunction = SpatialShockProcesses[IndexIntoShockProcesses+6]
     @#if UsingGrowthSyntax
         @#for Point in 1 : SpatialNumPoints
             @#define EndoVariables = EndoVariables + [ VariableName + IndicesStringArray[Point], Minimum, Maximum, "1" ]
@@ -51,7 +49,45 @@
     @#endif
     @#include "InternalClassifyDeclare.mod"
     @#define ShockName = "epsilon_" + VariableName
-    @#define TransformedSteadyState = "(" + TransformationPrefix + SteadyState + TrnasformationSuffix + ")"
+    @#define TransformedSteadyState = TransformationPrefix + SteadyState + TransformationSuffix
+    @#for Point1 in 1 : SpatialNumPoints
+        @#for Point2 in ( Point1 + 1 ) : SpatialNumPoints
+            @#include "GetDistance.mod"
+            @#define InputString = ShockFunction
+            @#define ReplacementString = Distance
+            @#include "PerformReplacement.mod"
+            @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "corr " + ShockName + IndicesStringArray[Point1] + ", " + ShockName + IndicesStringArray[Point2] + " = " + OutputString + ";" ]
+        @#endfor
+        @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
+        @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        varexo @{ShockName + IndicesStringArray[Point1]};
+        @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + IndicesStringArray[Point1] + " = 1;" ]
+    @#endfor
+@#endfor
+@#define NumSpatialDiffusionShockProcesses = length( SpatialDiffusionShockProcesses ) / 9
+@#for ShockIndex in 1 : NumSpatialDiffusionShockProcesses
+    @#define IndexIntoShockProcesses = ShockIndex * 9 - 8
+    @#define VariableName = SpatialDiffusionShockProcesses[IndexIntoShockProcesses]
+    @#define Minimum = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+1]
+    @#define Maximum = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+2]
+    @#define SteadyState = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+3]
+    @#define Rho = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+4]
+    @#define Sigma = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+5]
+    @#define DiffusionAmount = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+6]
+    @#define DiffusionFunction = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+7]
+    @#define ShockFunction = SpatialDiffusionShockProcesses[IndexIntoShockProcesses+8]
+    @#if UsingGrowthSyntax
+        @#for Point in 1 : SpatialNumPoints
+            @#define EndoVariables = EndoVariables + [ VariableName + IndicesStringArray[Point], Minimum, Maximum, "1" ]
+        @#endfor
+    @#else
+        @#for Point in 1 : SpatialNumPoints
+            @#define EndoVariables = EndoVariables + [ VariableName + IndicesStringArray[Point], Minimum, Maximum ]
+        @#endfor
+    @#endif
+    @#include "InternalClassifyDeclare.mod"
+    @#define ShockName = "epsilon_" + VariableName
+    @#define TransformedSteadyState = TransformationPrefix + SteadyState + TransformationSuffix
     @#for Point1 in 1 : SpatialNumPoints
         @#define Integral = "( 0"
         @#if ( SpatialShape[1] == "P" ) || ( Point1 == 1 )
