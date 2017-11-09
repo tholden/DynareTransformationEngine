@@ -54,14 +54,22 @@
     @#define TransformedSteadyState = "(" + TransformationPrefix + SteadyState + TrnasformationSuffix + ")"
     @#for Point1 in 1 : SpatialNumPoints
         @#define Integral = "( 0"
-        @#define NewModelEquation = "#kappa_" + FullVariableName + "_" + IndicesStringArray[Point1] + " = ( 0"
+        @#if ( SpatialShape[1] == "P" ) || ( Point1 == 1 )
+            @#define DefineKappa = 1
+            @#define KappaIndicesString = IndicesStringArray[Point1]
+            @#define NewModelEquation = "#kappa_" + FullVariableName + KappaIndicesString + " = ( 0"
+        @#else
+            @#define DefineKappa = 0
+        @#endif
         @#for Point2 in 1 : SpatialNumPoints
             @#include "GetDistance.mod"
             @#define InputString = DiffusionFunction
             @#define ReplacementString = Distance
             @#include "PerformReplacement.mod"
             @#define Integral = Integral + " + ( " + OutputString + " ) * " + FullVariableName + IndicesStringArray[Point2] + "(-1)"
-            @#define NewModelEquation = NewModelEquation + " + ( " + OutputString + " )"
+            @#if DefineKappa
+                @#define NewModelEquation = NewModelEquation + " + ( " + OutputString + " )"
+            @#endif
             @#if Point1 < Point2
                 @#define InputString = ShockFunction
                 @#include "PerformReplacement.mod"
@@ -69,9 +77,11 @@
             @#endif
         @#endfor
         @#define Integral = Integral + " ) / ( " + Numbers[SpatialPointsPerDimension] + " ^ " + Numbers[SpatialDimensions] + " )"
-        @#define NewModelEquation = NewModelEquation + " ) / ( " + Numbers[SpatialPointsPerDimension] + " ^ " + Numbers[SpatialDimensions] + " );"
-        @#define ExtraModelEquations = ExtraModelEquations + [ NewModelEquation ]
-        @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + "_" + IndicesStringArray[Point1] + " ) " + " + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
+        @#if DefineKappa
+            @#define NewModelEquation = NewModelEquation + " ) / ( " + Numbers[SpatialPointsPerDimension] + " ^ " + Numbers[SpatialDimensions] + " );"
+            @#define ExtraModelEquations = ExtraModelEquations + [ NewModelEquation ]
+        @#endif
+        @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + KappaIndicesString + " ) " + " + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
         @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
         varexo @{ShockName + IndicesStringArray[Point1]};
         @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + IndicesStringArray[Point1] + " = 1;" ]
