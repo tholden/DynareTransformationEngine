@@ -3,14 +3,14 @@
 @#define Distance = "( ( 0 "
 @#if SpatialShape[1] == "P"
     @#for Dimension in 1 : SpatialDimensions
-        @#define DistanceTemp = Numbers[Indices1] + "/" + Numbers[SpatialPointsPerDimension+1] + " - " + Numbers[Indices2] + "/" + Numbers[SpatialPointsPerDimension+1]
-        @#define Distance = Distance + " + abs( " + DistanceTemp + " ) ^ ( " + SpatialNorm + " )"
+        @#define DistanceTemp = "abs( " + Numbers[Indices1] + "/" + Numbers[SpatialPointsPerDimension+1] + " - " + Numbers[Indices2] + "/" + Numbers[SpatialPointsPerDimension+1] + " )"
+        @#define Distance = Distance + " + " + DistanceTemp + " ^ ( " + SpatialNorm + " )"
     @#endfor
     @#define Distance = Distance + " ) ^ ( 1 / ( " + SpatialNorm + " ) ) )"
 @#else
     @#for Dimension in 1 : SpatialDimensions
-        @#define DistanceTemp = Numbers[Indices1] + "/" + Numbers[SpatialPointsPerDimension+1] + " - " + Numbers[Indices2] + "/" + Numbers[SpatialPointsPerDimension+1]
-        @#define Distance = Distance + " + min( abs( " + DistanceTemp + " ), min( abs( " + DistanceTemp + " + 1 ), abs( " + DistanceTemp + " - 1 ) ) ) ^ ( " + SpatialNorm + " )"
+        @#define DistanceTemp = "abs( " + Numbers[Indices1] + "/" + Numbers[SpatialPointsPerDimension+1] + " - " + Numbers[Indices2] + "/" + Numbers[SpatialPointsPerDimension+1] + " )"
+        @#define Distance = Distance + " + min( " + DistanceTemp + " , 1 - " + DistanceTemp + " ) ^ ( " + SpatialNorm + " )"
     @#endfor
     @#define Distance = Distance + " ) ^ ( 1 / ( " + SpatialNorm + " ) ) )"
 @#endif
