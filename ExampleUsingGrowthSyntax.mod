@@ -62,19 +62,20 @@ model;
 end;
 
 steady_state_model;
+    @#include "InsertNewStartSteadyStateEquations.mod"
     PI_ = PI_STEADY;
     PI_STAR_ = ( (1 - theta * (1 / PI_)^(1 - varepsilon) ) / (1 - theta) )^(1/(1 - varepsilon));
     NU_ = ( ( 1 - theta) / (1 - theta * PI_ ^varepsilon) ) * PI_STAR_ ^(-varepsilon);
-    W_ = A_STEADY * PI_STAR_ * ((varepsilon - 1) / varepsilon) * ( (1 - theta * beta_STEADY * PI_ ^varepsilon)/(1 - theta * beta_STEADY * PI_ ^(varepsilon-1)));
-    C_ = (W_ /(psi * ((1/(1 - Sg_STEADY)) * NU_/ A_STEADY)^vartheta))^(1/(1 + vartheta));
-    Y_ = (1 / (1 - Sg_STEADY)) * C_;
-    G_ = Sg_STEADY * Y_;
-    L_ = Y_ *NU_ / A_STEADY;
-    MC_ = W_ / A_STEADY;
-    R_ = PI_ / beta_STEADY;
-    AUX1_ = W_ / A_STEADY * (Y_ /C_)/(1 - theta * beta_STEADY * PI_ ^varepsilon);
-    AUX2_ = PI_STAR_ * (Y_ /C_)/(1 - theta * beta_STEADY * PI_ ^(varepsilon-1));
-    @#include "InsertNewSteadyStateEquations.mod"
+    W_ = A_ * PI_STAR_ * ((varepsilon - 1) / varepsilon) * ( (1 - theta * beta_ * PI_ ^varepsilon)/(1 - theta * beta_ * PI_ ^(varepsilon-1)));
+    C_ = (W_ /(psi * ((1/(1 - Sg_)) * NU_/ A_)^vartheta))^(1/(1 + vartheta));
+    Y_ = (1 / (1 - Sg_)) * C_;
+    G_ = Sg_ * Y_;
+    L_ = Y_ *NU_ / A_;
+    MC_ = W_ / A_;
+    R_ = PI_ / beta_;
+    AUX1_ = W_ / A_ * (Y_ /C_)/(1 - theta * beta_ * PI_ ^varepsilon);
+    AUX2_ = PI_STAR_ * (Y_ /C_)/(1 - theta * beta_ * PI_ ^(varepsilon-1));
+    @#include "InsertNewEndSteadyStateEquations.mod"
 end;
 
 shocks;

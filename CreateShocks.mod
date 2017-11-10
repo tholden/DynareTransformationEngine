@@ -16,7 +16,7 @@
     @#define ShockName = "epsilon_" + VariableName
     @#define TransformedSteadyState = TransformationPrefix + SteadyState + TransformationSuffix
     @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + "(-1)" + " + (" + Sigma + ") * " + ShockName + ";" ]
-    @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ VariableName + "_ = " + SteadyState + ";" ]
+    @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + SteadyState + ";" ]
     varexo @{ShockName};
     @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + " = 1;" ]
 @#endfor
@@ -67,7 +67,7 @@
             @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "corr " + ShockName + IndicesStringArray[Point1] + ", " + ShockName + IndicesStringArray[Point2] + " = " + OutputString + ";" ]
         @#endfor
         @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
-        @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
         varexo @{ShockName + IndicesStringArray[Point1]};
         @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + IndicesStringArray[Point1] + " = 1;" ]
     @#endfor
@@ -127,7 +127,7 @@
             @#define ExtraModelEquations = ExtraModelEquations + [ NewModelEquation ]
         @#endif
         @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + KappaIndicesString + " ) " + " + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
-        @#define ExtraSteadyStateEquations = ExtraSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
         varexo @{ShockName + IndicesStringArray[Point1]};
         @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + IndicesStringArray[Point1] + " = 1;" ]
     @#endfor

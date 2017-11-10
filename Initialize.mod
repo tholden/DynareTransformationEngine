@@ -13,8 +13,11 @@
 @#ifndef ExtraModelEquations
     @#define ExtraModelEquations = EmptyStringArray
 @#endif
-@#ifndef ExtraSteadyStateEquations
-    @#define ExtraSteadyStateEquations = EmptyStringArray
+@#ifndef ExtraStartSteadyStateEquations
+    @#define ExtraStartSteadyStateEquations = EmptyStringArray
+@#endif
+@#ifndef ExtraEndSteadyStateEquations
+    @#define ExtraEndSteadyStateEquations = EmptyStringArray
 @#endif
 @#ifndef ShockProcesses
     @#define ShockProcesses = EmptyStringArray
