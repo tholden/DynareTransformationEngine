@@ -26,8 +26,16 @@
     @#define Indices = EmptyNumericArray
     @#define Depth = 0
     @#include "CreateIndicesArray.mod"
+    @#define SpatialNumPoints = length( IndicesStringArray )
+    @#for Point1 in 1 : SpatialNumPoints
+        @#for Point2 in 1 : SpatialNumPoints
+            @#include "GetDistance.mod"
+            @#define ExtraModelEquations = ExtraModelEquations + [ "#Distance" + IndicesStringArray[Point1] + IndicesStringArray[Point2] + " = " + Distance + ";" ]
+        @#endfor
+    @#endfor
+@#else
+    @#define SpatialNumPoints = 0
 @#endif
-@#define SpatialNumPoints = length( IndicesStringArray )
 @#define NumSpatialShockProcesses = length( SpatialShockProcesses ) / 7
 @#for ShockIndex in 1 : NumSpatialShockProcesses
     @#define IndexIntoShockProcesses = ShockIndex * 7 - 6
@@ -54,7 +62,7 @@
         @#for Point2 in ( Point1 + 1 ) : SpatialNumPoints
             @#include "GetDistance.mod"
             @#define InputString = ShockFunction
-            @#define ReplacementString = Distance
+            @#define ReplacementString = "( " + Distance + " )"
             @#include "PerformReplacement.mod"
             @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "corr " + ShockName + IndicesStringArray[Point1] + ", " + ShockName + IndicesStringArray[Point2] + " = " + OutputString + ";" ]
         @#endfor
@@ -98,16 +106,17 @@
             @#define DefineKappa = 0
         @#endif
         @#for Point2 in 1 : SpatialNumPoints
-            @#include "GetDistance.mod"
             @#define InputString = DiffusionFunction
-            @#define ReplacementString = Distance
+            @#define ReplacementString = "Distance" + IndicesStringArray[Point1] + IndicesStringArray[Point2]
             @#include "PerformReplacement.mod"
             @#define Integral = Integral + " + ( " + OutputString + " ) * " + FullVariableName + IndicesStringArray[Point2] + "(-1)"
             @#if DefineKappa
                 @#define NewModelEquation = NewModelEquation + " + ( " + OutputString + " )"
             @#endif
             @#if Point1 < Point2
+                @#include "GetDistance.mod"
                 @#define InputString = ShockFunction
+                @#define ReplacementString = "( " + Distance + " )"
                 @#include "PerformReplacement.mod"
                 @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "corr " + ShockName + IndicesStringArray[Point1] + ", " + ShockName + IndicesStringArray[Point2] + " = " + OutputString + ";" ]
             @#endif
