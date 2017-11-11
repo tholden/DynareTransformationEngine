@@ -30,6 +30,7 @@
     @#for Point1 in 1 : SpatialNumPoints
         @#for Point2 in 1 : SpatialNumPoints
             @#include "GetDistance.mod"
+            @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ "Distance" + IndicesStringArray[Point1] + IndicesStringArray[Point2] + "_ = " + Distance + ";" ]
             @#define ExtraModelEquations = ExtraModelEquations + [ "#Distance" + IndicesStringArray[Point1] + IndicesStringArray[Point2] + " = " + Distance + ";" ]
         @#endfor
     @#endfor
