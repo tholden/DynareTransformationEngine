@@ -2,7 +2,7 @@
 
 // Options determining the spatial topology
 @#define SpatialDimensions = 1
-@#define SpatialPointsPerDimension = 100
+@#define SpatialPointsPerDimension = 10
 @#define SpatialNorm = "2"
 @#define SpatialShape = "Torus"
 // The other option is "Plane"
