@@ -29,18 +29,18 @@
     @#define SpatialNumPoints = length( IndicesStringArray )
     @#for Point1 in 1 : SpatialNumPoints
         @#define Indices1 = [ IndicesArray[ ((Point1-1)*SpatialDimensions+1):(Point1*SpatialDimensions) ] ]
-        @#define Weight = "1"
-        @#for Dimension in 1 : SpatialDimensions
-            @#if SpatialShape[1] == "P"
+        @#if SpatialShape[1] == "P"
+            @#define Weight = "1"
+            @#for Dimension in 1 : SpatialDimensions
                 @#if ( Indices1[Dimension] == 1 ) || ( Indices1[Dimension] == SpatialPointsPerDimension )
                     @#define Weight = Weight + " * ( 1 / 2 / " + Numbers[SpatialPointsPerDimension] + " )"
                 @#else
                     @#define Weight = Weight + " * ( 1 / " + Numbers[SpatialPointsPerDimension] + " )"
                 @#endif
-            @#else
-                @#define Weight = Weight + " * ( 1 / " + Numbers[SpatialPointsPerDimension+1] + " )"
-            @#endif
-        @#endfor
+            @#endfor
+        @#else
+            @#define Weight = "1 / ( " + Numbers[SpatialPointsPerDimension+1] + " ^ " + Numbers[SpatialDimensions+1] + " )"
+        @#endif
         @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ "Weight" + IndicesStringArray[Point1] + "_ = " + Weight + ";" ]
         @#define ExtraModelEquations = ExtraModelEquations + [ "#Weight" + IndicesStringArray[Point1] + " = " + Weight + ";" ]
         @#for Point2 in 1 : SpatialNumPoints
