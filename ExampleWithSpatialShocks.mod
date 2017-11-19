@@ -30,7 +30,7 @@
 
 @#include "ClassifyDeclare.mod"
 
-parameters alpha beta nu rho chi eta zeta sigma;
+parameters alpha beta nu rho chi eta zeta sigma phi;
 
 alpha = 0.3;
 beta = 0.99;
@@ -40,6 +40,7 @@ chi = 0.5;
 eta = 8;
 zeta = 4;
 sigma = 0.02;
+phi = 1e-6;
 
 model;
     @#include "InsertNewModelEquations.mod"
@@ -48,7 +49,7 @@ model;
         @#define CurrentIndexString = IndicesStringArray[Point]
         #L@{CurrentIndexString} = ( ( 1 - alpha ) * A@{CurrentIndexString} ^ alpha / C@{CurrentIndexString} ) ^ ( 1 / ( alpha + nu ) );
         #Y@{CurrentIndexString} = A@{CurrentIndexString} ^ alpha * L@{CurrentIndexString} ^ ( 1 - alpha );
-        1 = beta * R * C@{CurrentIndexString} / C@{CurrentIndexString}_LEAD;
+        1 + phi * B = beta * R * C@{CurrentIndexString} / C@{CurrentIndexString}_LEAD;
         C@{CurrentIndexString} + B@{CurrentIndexString} = Y@{CurrentIndexString} + R_LAG * B@{CurrentIndexString}_LAG;
     @#endfor
 
