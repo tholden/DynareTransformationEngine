@@ -17,11 +17,21 @@
 @#define WithDiffusion = 1
 
 @#if WithDiffusion
-    @#define SpatialDiffusionShockProcesses = SpatialDiffusionShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "chi", "(exp(-eta*@+eta/2)+exp(eta*@-eta/2))/(exp(eta/2)+exp(-eta/2))#", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
-    // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, the amount of diffusion, the function governing diffusion (with "@" representing the input distance, and "#" at the end of the string) and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+    @#if SpatialShape[1] == "P"
+        @#define SpatialDiffusionShockProcesses = SpatialDiffusionShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "chi", "exp(-eta*@)#", "exp(-zeta*@)#" ]
+        // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, the amount of diffusion, the function governing diffusion (with "@" representing the input distance, and "#" at the end of the string) and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+    @#else
+        @#define SpatialDiffusionShockProcesses = SpatialDiffusionShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "chi", "(exp(-eta*@+eta/2)+exp(eta*@-eta/2))/(exp(eta/2)+exp(-eta/2))#", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
+        // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, the amount of diffusion, the function governing diffusion (with "@" representing the input distance, and "#" at the end of the string) and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+    @#endif
 @#else
-    @#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
-    // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+    @#if SpatialShape[1] == "P"
+        @#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "exp(-zeta*@)#" ]
+        // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+    @#else
+        @#define SpatialShockProcesses = SpatialShockProcesses + [ "A", "0", "Inf", "1", "rho", "sigma", "(exp(-zeta*@+zeta/2)+exp(zeta*@-zeta/2))/(exp(zeta/2)+exp(-zeta/2))#" ]
+        // In order, these are the variable name, its minimum, its maximum, its steady-state, its persistence, its standard deviation, and the function governing correlation in the shock (with "@" representing the input distance, and "#" at the end of the string)
+    @#endif
 @#endif
 
 @#include "CreateShocks.mod"
