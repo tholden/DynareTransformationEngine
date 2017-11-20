@@ -2,10 +2,16 @@
 
 // Options determining the spatial topology
 @#define SpatialDimensions = 1
-@#define SpatialPointsPerDimension = 10
-@#define SpatialNorm = "2"
 @#define SpatialShape = "Torus"
 // The other option is "Plane"
+
+@#if SpatialDimensions == 1
+    @#define SpatialNorm = "1"
+    @#define SpatialPointsPerDimension = 100
+@#else
+    @#define SpatialNorm = "2"
+    @#define SpatialPointsPerDimension = 10
+@#endif
 
 // This is an option specific to this file. Setting it to 1 turns on spatial diffusion of technology here.
 @#define WithDiffusion = 1
