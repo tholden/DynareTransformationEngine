@@ -107,11 +107,15 @@ end;
 
 steady_state_model;
     R_ = 1 / beta;
+    C_ = ( 1 - alpha ) ^ ( ( 1 - alpha ) / ( 1 + nu ) );
+    A_ = 1;
+    
     @#for Point in 1 : SpatialNumPoints
         @#define Index = IndicesStringArray[Point]
-        C@{Index}_ = ( 1 - alpha ) ^ ( ( 1 - alpha ) / ( 1 + nu ) );
+        C@{Index}_ = C_;
         B@{Index}_ = 0;
     @#endfor
+    
     @#include "InsertNewSteadyStateEquations.mod"
 end;
 
