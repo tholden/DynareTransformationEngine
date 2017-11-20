@@ -72,7 +72,7 @@ model;
         #L@{CurrentIndexString} = ( ( 1 - alpha ) * A@{CurrentIndexString} ^ alpha / C@{CurrentIndexString} ) ^ ( 1 / ( alpha + nu ) );
         #Y@{CurrentIndexString} = A@{CurrentIndexString} ^ alpha * L@{CurrentIndexString} ^ ( 1 - alpha );
         1 + phi * B = beta * R * C@{CurrentIndexString} / C@{CurrentIndexString}_LEAD;
-        C@{CurrentIndexString} + B@{CurrentIndexString} = Y@{CurrentIndexString} + R_LAG * B@{CurrentIndexString}_LAG;
+        C@{CurrentIndexString} + B@{CurrentIndexString} + phi / 2 * B@{CurrentIndexString} ^ 2 = Y@{CurrentIndexString} + R_LAG * B@{CurrentIndexString}_LAG;
     @#endfor
 
     #B = ( 0
