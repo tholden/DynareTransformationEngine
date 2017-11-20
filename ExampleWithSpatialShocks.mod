@@ -39,9 +39,9 @@
 @#define EndoVariables = EndoVariables + [ "R", "0", "Inf" ]
 
 @#for Point in 1 : SpatialNumPoints
-    @#define CurrentIndexString = IndicesStringArray[Point]
-    @#define EndoVariables = EndoVariables + [ "C" + CurrentIndexString, "0", "Inf" ]
-    @#define EndoVariables = EndoVariables + [ "B" + CurrentIndexString, "-Inf", "Inf" ]
+    @#define Index = IndicesStringArray[Point]
+    @#define EndoVariables = EndoVariables + [ "C" + Index, "0", "Inf" ]
+    @#define EndoVariables = EndoVariables + [ "B" + Index, "-Inf", "Inf" ]
 @#endfor
 
 @#include "ClassifyDeclare.mod"
@@ -68,17 +68,17 @@ model;
     @#include "InsertNewModelEquations.mod"
 
     @#for Point in 1 : SpatialNumPoints
-        @#define CurrentIndexString = IndicesStringArray[Point]
-        #L@{CurrentIndexString} = ( ( 1 - alpha ) * A@{CurrentIndexString} ^ alpha / C@{CurrentIndexString} ) ^ ( 1 / ( alpha + nu ) );
-        #Y@{CurrentIndexString} = A@{CurrentIndexString} ^ alpha * L@{CurrentIndexString} ^ ( 1 - alpha );
-        1 + phi * B = beta * R * C@{CurrentIndexString} / C@{CurrentIndexString}_LEAD;
-        C@{CurrentIndexString} + B@{CurrentIndexString} + phi / 2 * B@{CurrentIndexString} ^ 2 = Y@{CurrentIndexString} + R_LAG * B@{CurrentIndexString}_LAG;
+        @#define Index = IndicesStringArray[Point]
+        #L@{Index} = ( ( 1 - alpha ) * A@{Index} ^ alpha / C@{Index} ) ^ ( 1 / ( alpha + nu ) );
+        #Y@{Index} = A@{Index} ^ alpha * L@{Index} ^ ( 1 - alpha );
+        1 + phi * B = beta * R * C@{Index} / C@{Index}_LEAD;
+        C@{Index} + B@{Index} + phi / 2 * B@{Index} ^ 2 = Y@{Index} + R_LAG * B@{Index}_LAG;
     @#endfor
 
     #B = ( 0
     @#for Point in 1 : SpatialNumPoints
-        @#define CurrentIndexString = IndicesStringArray[Point]
-        + B@{CurrentIndexString}
+        @#define Index = IndicesStringArray[Point]
+        + B@{Index}
     @#endfor
         ) / @{SpatialNumPoints};
 
@@ -92,9 +92,9 @@ end;
 steady_state_model;
     R_ = 1 / beta;
     @#for Point in 1 : SpatialNumPoints
-        @#define CurrentIndexString = IndicesStringArray[Point]
-        C@{CurrentIndexString}_ = ( 1 - alpha ) ^ ( ( 1 - alpha ) / ( 1 + nu ) );
-        B@{CurrentIndexString}_ = 0;
+        @#define Index = IndicesStringArray[Point]
+        C@{Index}_ = ( 1 - alpha ) ^ ( ( 1 - alpha ) / ( 1 + nu ) );
+        B@{Index}_ = 0;
     @#endfor
     @#include "InsertNewSteadyStateEquations.mod"
 end;
