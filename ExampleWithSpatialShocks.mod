@@ -124,4 +124,4 @@ options_.qz_criterium = 1 - 1e-8;
 steady;
 check;
 
-stoch_simul( order = 2, irf = 0, periods = 10000, nocorr, nofunctions, nodisplay, nograph );
+stoch_simul( order = 2, irf = 0, periods = 10000, nocorr, nofunctions, nodecomposition, nomoments, nodisplay, nograph, k_order_solver );
