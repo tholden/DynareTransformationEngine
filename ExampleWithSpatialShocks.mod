@@ -73,7 +73,7 @@ model;
         @#define Index = IndicesStringArray[Point]
         #L@{Index} = ( ( 1 - alpha ) * A@{Index} ^ alpha / C@{Index} ) ^ ( 1 / ( alpha + nu ) );
         #Y@{Index} = A@{Index} ^ alpha * L@{Index} ^ ( 1 - alpha );
-        1 + phi * B = beta * R * C@{Index} / C@{Index}_LEAD;
+        1 + phi * B@{Index} = beta * R * C@{Index} / C@{Index}_LEAD;
         C@{Index} + B@{Index} + phi / 2 * B@{Index} ^ 2 = Y@{Index} + R_LAG * B@{Index}_LAG;
     @#endfor
 
