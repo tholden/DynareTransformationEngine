@@ -119,7 +119,9 @@ steady_state_model;
     @#include "InsertNewSteadyStateEquations.mod"
 end;
 
+options_.qz_criterium = 1 - 1e-8;
+
 steady;
-//check;
+check;
 
 stoch_simul( order = 2, irf = 0, periods = 10000, nocorr, nofunctions, nodisplay, nograph );
