@@ -75,12 +75,12 @@ model;
         C@{Index} + B@{Index} + phi / 2 * B@{Index} ^ 2 = Y@{Index} + R_LAG * B@{Index}_LAG;
     @#endfor
 
-    #B = ( 0
+    #B =
     @#for Point in 1 : SpatialNumPoints
         @#define Index = IndicesStringArray[Point]
-        + B@{Index}
+        + Weight@{Index} * B@{Index}
     @#endfor
-        ) / @{SpatialNumPoints};
+    ;
 
     B = 0;
 end;
