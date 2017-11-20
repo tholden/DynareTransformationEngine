@@ -6,3 +6,5 @@
 test*.*
 checksum
 Example*.m
+
+tightfigadv.m
