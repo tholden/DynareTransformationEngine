@@ -37,8 +37,8 @@
 @#include "CreateShocks.mod"
 
 @#define EndoVariables = EndoVariables + [ "R", "0", "Inf" ]
-@#define EndoVariables = EndoVariables + [ "A" + Index, "0", "Inf" ]
-@#define EndoVariables = EndoVariables + [ "C" + Index, "0", "Inf" ]
+@#define EndoVariables = EndoVariables + [ "A", "0", "Inf" ]
+@#define EndoVariables = EndoVariables + [ "C", "0", "Inf" ]
 
 @#for Point in 1 : SpatialNumPoints
     @#define Index = IndicesStringArray[Point]
