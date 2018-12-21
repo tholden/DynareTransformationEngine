@@ -53,3 +53,6 @@
 @#ifndef UsingGrowthSyntax
     @#define UsingGrowthSyntax = 0
 @#endif
+@#ifndef IntroduceInitialParams
+    @#define IntroduceInitialParams = 0
+@#endif

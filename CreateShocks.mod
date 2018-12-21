@@ -15,8 +15,21 @@
     @#include "InternalClassifyDeclare.mod"
     @#define ShockName = "epsilon_" + VariableName
     @#define TransformedSteadyState = TransformationPrefix + SteadyState + TransformationSuffix
-    @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + "(-1)" + " + (" + Sigma + ") * " + ShockName + ";" ]
-    @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + SteadyState + ";" ]
+    @#if Rho == "1"
+        @#define ExtraModelEquations = ExtraModelEquations + [ "[dynamic] " + FullVariableName + " = " + FullVariableName + "(-1)" + " + (" + Sigma + ") * " + ShockName + ";" ]
+        @#if IntroduceInitialParams
+            @#define ExtraModelEquations = ExtraModelEquations + [ "[static]  " + FullVariableName + " = Initial_" + FullVariableName + ";" ]
+            @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + InverseTransformationPrefix + "Initial_" + FullVariableName + InverseTransformationSuffix + ";" ]
+            parameters Initial_@{FullVariableName};
+            Initial_@{FullVariableName} = @{TransformedSteadyState};
+        @#else
+            @#define ExtraModelEquations = ExtraModelEquations + [ "[static]  " + FullVariableName + " = " + TransformedSteadyState + ";" ]
+            @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + SteadyState + ";" ]
+        @#endif
+    @#else
+        @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + "(-1)" + " + (" + Sigma + ") * " + ShockName + ";" ]
+        @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + SteadyState + ";" ]
+    @#endif
     varexo @{ShockName};
     @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + " = 1;" ]
 @#endfor
@@ -82,8 +95,21 @@
             @#include "PerformReplacement.mod"
             @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "corr " + ShockName + IndicesStringArray[Point1] + ", " + ShockName + IndicesStringArray[Point2] + " = " + OutputString + ";" ]
         @#endfor
-        @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
-        @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        @#if Rho == "1"
+            @#define ExtraModelEquations = ExtraModelEquations + [ "[dynamic] " + FullVariableName + IndicesStringArray[Point1] + " = " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
+            @#if IntroduceInitialParams
+                @#define ExtraModelEquations = ExtraModelEquations + [ "[static]  " + FullVariableName + IndicesStringArray[Point1] + " = Initial_" + FullVariableName + IndicesStringArray[Point1] + ";" ]
+                @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + InverseTransformationPrefix + "Initial_" + FullVariableName + IndicesStringArray[Point1] + InverseTransformationSuffix + ";" ]
+                parameters Initial_@{FullVariableName}@{IndicesStringArray[Point1]};
+                Initial_@{FullVariableName}@{IndicesStringArray[Point1]} = @{TransformedSteadyState};
+            @#else
+                @#define ExtraModelEquations = ExtraModelEquations + [ "[static]  " + FullVariableName + IndicesStringArray[Point1] + " = " + TransformedSteadyState + ";" ]
+                @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+            @#endif
+        @#else
+            @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
+            @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        @#endif
         varexo @{ShockName + IndicesStringArray[Point1]};
         @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + IndicesStringArray[Point1] + " = 1;" ]
     @#endfor
@@ -142,8 +168,21 @@
             @#define NewModelEquation = NewModelEquation + " ) / ( " + Numbers[SpatialPointsPerDimension+1] + " ^ " + Numbers[SpatialDimensions+1] + " );"
             @#define ExtraModelEquations = ExtraModelEquations + [ NewModelEquation ]
         @#endif
-        @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + KappaIndicesString + " ) " + " + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
-        @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        @#if Rho == "1"
+            @#define ExtraModelEquations = ExtraModelEquations + [ "[dynamic] " + FullVariableName + IndicesStringArray[Point1] + " = ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + KappaIndicesString + " ) + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
+            @#if IntroduceInitialParams
+                @#define ExtraModelEquations = ExtraModelEquations + [ "[static]  " + FullVariableName + IndicesStringArray[Point1] + " = Initial_" + FullVariableName + IndicesStringArray[Point1] + ";" ]
+                @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + "_ = " + InverseTransformationPrefix + "Initial_" + FullVariableName + IndicesStringArray[Point1] + InverseTransformationSuffix + ";" ]
+                parameters Initial_@{FullVariableName}@{IndicesStringArray[Point1]};
+                Initial_@{FullVariableName}@{IndicesStringArray[Point1]} = @{TransformedSteadyState};
+            @#else
+                @#define ExtraModelEquations = ExtraModelEquations + [ "[static]  " + FullVariableName + IndicesStringArray[Point1] + " = " + TransformedSteadyState + ";" ]
+                @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+            @#endif
+        @#else
+            @#define ExtraModelEquations = ExtraModelEquations + [ FullVariableName + IndicesStringArray[Point1] + " = (1-(" + Rho + ")) * " + TransformedSteadyState + " + (" + Rho + ") * ( (1-(" + DiffusionAmount + ")) * " + FullVariableName + IndicesStringArray[Point1] + "(-1) + (" + DiffusionAmount + ") * ( " + Integral + " ) / kappa_" + FullVariableName + KappaIndicesString + " ) " + " + (" + Sigma + ") * " + ShockName + IndicesStringArray[Point1] + ";" ]
+            @#define ExtraStartSteadyStateEquations = ExtraStartSteadyStateEquations + [ VariableName + IndicesStringArray[Point1] + "_ = " + SteadyState + ";" ]
+        @#endif
         varexo @{ShockName + IndicesStringArray[Point1]};
         @#define ExtraShockBlockLines = ExtraShockBlockLines + [ "var " + ShockName + IndicesStringArray[Point1] + " = 1;" ]
     @#endfor
